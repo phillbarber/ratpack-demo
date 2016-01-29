@@ -1,9 +1,8 @@
-package ratpack.example.java;
+package com.github.phillbarber;
 
 import ratpack.handling.Context;
 import ratpack.handling.Handler;
 import ratpack.http.client.HttpClient;
-import ratpack.server.PublicAddress;
 
 import javax.inject.Singleton;
 import java.net.URI;
@@ -16,10 +15,10 @@ public class HappyPathHandler implements Handler {
   public void handle(Context context) throws Exception {
 
       HttpClient httpClient = context.get(HttpClient.class);            //get httpClient
-      URI uri = new URI("http://localhost:1234/dummy");
+      URI uri = new URI("http://localhost:1234/fast-endpoint");
 
       httpClient.get(uri).then(response -> {
-          context.render("I got: " + response.getBody().getText());  //Render the response from the httpClient GET request
+          context.render("Downstream system returned: " + response.getBody().getText());  //Render the response from the httpClient GET request
               }
       );
   }

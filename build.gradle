@@ -21,6 +21,8 @@ repositories {
 dependencies {
     testCompile 'junit:junit:4.11'
     testCompile 'org.glassfish.jersey.core:jersey-client:2.22.1'
+    testCompile 'org.assertj:assertj-core:1.2.0'
+
 
     // This is a Guice ratpack app
     compile ratpack.dependency("guice")
@@ -50,4 +52,4 @@ idea {
     }
 }
 
-mainClassName = "ratpack.example.java.MyApp"
+mainClassName = "com.github.phillbarber.MyApp"

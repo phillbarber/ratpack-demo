@@ -1,10 +1,7 @@
-package ratpack.example.java;
+package com.github.phillbarber;
 
 import rx.Observable;
 
-/**
- * Created by pergola on 28/01/16.
- */
 public class ServiceThatReturnsAnObservableOfTwoItems {
 
     public Observable<String> getObservable(){

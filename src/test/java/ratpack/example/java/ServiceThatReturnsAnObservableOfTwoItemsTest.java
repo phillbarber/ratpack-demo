@@ -1,17 +1,13 @@
 package ratpack.example.java;
 
+import com.github.phillbarber.ServiceThatReturnsAnObservableOfTwoItems;
 import org.junit.Test;
 import rx.Observable;
-import rx.functions.Action1;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static junit.framework.TestCase.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Created by pergola on 28/01/16.
- */
 public class ServiceThatReturnsAnObservableOfTwoItemsTest {
 
     @Test
@@ -24,7 +20,7 @@ public class ServiceThatReturnsAnObservableOfTwoItemsTest {
             itemsEmitted.incrementAndGet();
         });
 
-        assertEquals(1, itemsEmitted.get());
+        assertThat(itemsEmitted.get()).isEqualTo(2);
     }
 
 }

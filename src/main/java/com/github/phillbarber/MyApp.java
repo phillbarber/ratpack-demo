@@ -1,6 +1,5 @@
-package ratpack.example.java;
+package com.github.phillbarber;
 
-import ratpack.server.BaseDir;
 import ratpack.server.RatpackServer;
 
 public class MyApp {

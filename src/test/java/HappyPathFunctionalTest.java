@@ -1,10 +1,10 @@
-import external.DummyService;
+import com.github.phillbarber.external.DummyService;
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ratpack.example.java.MyApp;
+import com.github.phillbarber.MyApp;
 import ratpack.test.MainClassApplicationUnderTest;
 import ratpack.test.ServerBackedApplicationUnderTest;
 
@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.*;
 
 public class HappyPathFunctionalTest {
 
@@ -37,9 +37,11 @@ public class HappyPathFunctionalTest {
         URI baseURI = serverBackedApplicationUnderTest.getAddress();
         JerseyClient build = new JerseyClientBuilder().build();
 
-        Response response = build.target(new URI(baseURI.toString() + "happy-path")).request().get();
+        URI uri = new URI(baseURI.toString() + "happy-path");
+        Response response = build.target(uri).request().get();
 
-        assertEquals(response.getStatus(), 200);
+        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(response.readEntity(String.class)).isEqualTo("Downstream system returned: YAY");
 
 
     }
