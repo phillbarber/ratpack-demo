@@ -1,4 +1,4 @@
-import com.github.phillbarber.external.DummyService;
+import com.github.phillbarber.external.DownstreamService;
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.junit.After;
@@ -17,16 +17,16 @@ import static org.assertj.core.api.Assertions.*;
 public class HappyPathFunctionalTest {
 
 
-    private DummyService dummyService = new DummyService();
+    private DownstreamService downstreamService = new DownstreamService();
 
     @Before
     public void startDummyService() throws Exception {
-        dummyService.start();
+        downstreamService.start();
     }
 
     @After
     public void stopDummyService(){
-        dummyService.stop();
+        downstreamService.stop();
     }
 
 

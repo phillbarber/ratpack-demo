@@ -7,7 +7,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
-public class DummyService {
+public class DownstreamService {
 
     public static final int FIVE_SECONDS = 5000;
     public static final int ONE_HUNDRED_MILLIS = 100;
