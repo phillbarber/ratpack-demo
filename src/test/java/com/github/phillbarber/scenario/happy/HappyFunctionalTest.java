@@ -1,4 +1,4 @@
-package com.github.phillbarber.doubleobservable;
+package com.github.phillbarber.scenario.happy;
 
 import com.github.phillbarber.FunctionalTest;
 import org.junit.Test;
@@ -9,16 +9,16 @@ import java.net.URISyntaxException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DoubleObservableFunctionalTest extends FunctionalTest {
+public class HappyFunctionalTest extends FunctionalTest {
 
 
     @Test
-    public void returnsContent() throws URISyntaxException {
+    public void happyPathReturnsContent() throws URISyntaxException {
 
-        URI uri = new URI(getAddress().toString() + "double-observable");
+        URI uri = new URI(getAddress().toString() + "happy");
         Response response = jerseyClient().target(uri).request().get();
 
         assertThat(response.getStatus()).isEqualTo(200);
-        assertThat(response.readEntity(String.class)).isEqualTo("Downstream system returned: First Value");
+        assertThat(response.readEntity(String.class)).isEqualTo("Downstream system returned: YAY");
     }
 }

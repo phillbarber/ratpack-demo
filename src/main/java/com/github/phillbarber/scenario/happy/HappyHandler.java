@@ -1,4 +1,4 @@
-package com.github.phillbarber.happy;
+package com.github.phillbarber.scenario.happy;
 
 import ratpack.handling.Context;
 import ratpack.handling.Handler;

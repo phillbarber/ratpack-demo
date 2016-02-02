@@ -1,2 +1,4 @@
+Ensure that logs are emitte to tdout during gradlew clean build
+Add example of fixed double observable with .toPromise()
 Add example of badly behaved observable
 Add example showing ratpack throwing error - no response sent. - Understand what stops this from happenning normally.

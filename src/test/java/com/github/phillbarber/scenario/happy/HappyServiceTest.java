@@ -1,4 +1,4 @@
-package com.github.phillbarber.happy;
+package com.github.phillbarber.scenario.happy;
 
 import com.google.common.collect.Lists;
 import io.netty.buffer.PooledByteBufAllocator;

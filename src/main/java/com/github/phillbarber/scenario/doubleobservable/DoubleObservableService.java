@@ -1,4 +1,4 @@
-package com.github.phillbarber.doubleobservable;
+package com.github.phillbarber.scenario.doubleobservable;
 
 import rx.Observable;
 

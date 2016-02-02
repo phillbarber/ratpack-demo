@@ -1,4 +1,4 @@
-package com.github.phillbarber.doubleobservable;
+package com.github.phillbarber.scenario.doubleobservable;
 
 import ratpack.handling.Context;
 import ratpack.handling.Handler;
@@ -22,7 +22,7 @@ public class DoubleObservableHandler implements Handler {
         Observable<String> contentFromDownstreamSystem = doubleObservableService.getContent();
 
         contentFromDownstreamSystem.subscribe(response -> {
-                    context.render("Downstream system returned: " + response);  //Render the response from the httpClient GET request
+                    context.render("Downstream system returned: " + response);
                 }
         );
     }
