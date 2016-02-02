@@ -1,6 +1,7 @@
 package com.github.phillbarber;
 
 import com.github.phillbarber.scenario.doubleobservable.DoubleObservableHandler;
+import com.github.phillbarber.scenario.doubleobservable.DoubleObservableHandlerWithPromise;
 import com.github.phillbarber.scenario.doubleobservable.DoubleObservableService;
 import com.github.phillbarber.scenario.happy.HappyHandler;
 import com.github.phillbarber.scenario.happy.HappyService;
@@ -21,6 +22,7 @@ public class MyApp {
                 .handlers(chain -> {
                             chain
                                     .path("happy", new HappyHandler(happyService))
+                                    .path("double-observable-promise", new DoubleObservableHandlerWithPromise(new DoubleObservableService()))
                                     .path("double-observable", new DoubleObservableHandler(new DoubleObservableService()));
                         }
                 )
