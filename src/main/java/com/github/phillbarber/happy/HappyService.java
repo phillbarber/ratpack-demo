@@ -9,14 +9,14 @@ import rx.Observable;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class HappyPathService {
+public class HappyService {
 
     private URI uri;
     private HttpClient httpClient;
 
 
 
-    public HappyPathService(HttpClient httpClient) {
+    public HappyService(HttpClient httpClient) {
         this.httpClient = httpClient;
         try {
             uri = new URI("http://localhost:1234/fast-endpoint");

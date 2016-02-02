@@ -11,13 +11,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HappyPathServiceTest {
+public class HappyServiceTest {
 
     //todo - need to remember who to call httpclient code within a ratpack managed thread.
     @Test
     @Ignore()
     public void happyPathHandlerReturnsYAY(){
-        Observable<String> contentFromDownstreamSystem = new HappyPathService(new DefaultHttpClient(PooledByteBufAllocator.DEFAULT, 100000)).getContentFromDownstreamSystem();
+        Observable<String> contentFromDownstreamSystem = new HappyService(new DefaultHttpClient(PooledByteBufAllocator.DEFAULT, 100000)).getContentFromDownstreamSystem();
         List<String> result = Lists.newArrayList(contentFromDownstreamSystem.toBlocking().getIterator());
 
         assertThat(result.size()).isEqualTo(1);

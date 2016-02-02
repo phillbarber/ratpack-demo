@@ -5,7 +5,7 @@ import com.github.phillbarber.external.DownstreamService;
 /**
  * Created by pergola on 29/01/16.
  */
-public class Launcher {
+public class RunEverything {
 
     public static void main(String[] args) throws Exception {
         MyApp.main(null);

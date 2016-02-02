@@ -1,0 +1,2 @@
+The slow synchronous observable - Add test showing that an observable that emits items on same thread slowly will still block by default.
+Add test that shows an observable can be made to timeout?
