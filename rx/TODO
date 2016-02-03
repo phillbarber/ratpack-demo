@@ -1,2 +1,2 @@
 The slow synchronous observable - Add test showing that an observable that emits items on same thread slowly will still block by default.
-Add test that shows an observable can be made to timeout?
+Add test that shows an observable can be made to timeout? - low priority - perhaps demonstrate the question on timeout (i.e. is the timout the duration between items emitted OR total until onComplete())

@@ -5,6 +5,8 @@ import com.github.phillbarber.scenario.doubleobservable.DoubleObservableHandlerW
 import com.github.phillbarber.scenario.doubleobservable.DoubleObservableService;
 import com.github.phillbarber.scenario.happy.HappyHandler;
 import com.github.phillbarber.scenario.happy.HappyService;
+import com.github.phillbarber.scenario.observablethread.ObservableOnDifferentThreadHandler;
+import com.github.phillbarber.scenario.observablethread.ObservableOnDifferentThreadService;
 import io.netty.buffer.PooledByteBufAllocator;
 import ratpack.http.client.internal.DefaultHttpClient;
 import ratpack.server.RatpackServer;
@@ -23,6 +25,7 @@ public class MyApp {
                             chain
                                     .path("happy", new HappyHandler(happyService))
                                     .path("double-observable-promise", new DoubleObservableHandlerWithPromise(new DoubleObservableService()))
+                                    .path("observable-different-thread", new ObservableOnDifferentThreadHandler(new ObservableOnDifferentThreadService()))
                                     .path("double-observable", new DoubleObservableHandler(new DoubleObservableService()));
                         }
                 )
