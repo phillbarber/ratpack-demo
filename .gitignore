@@ -1,16 +1,11 @@
-# IntelliJ
-.idea
-*.iml
-
-# Maven
-target
-pom.xml.versionsBackup
-
-# Package Files
+*.class
 *.jar
-
-# Mac OS X
-.DS_Store
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+*.iml
+.idea/
+*.ipr
+*.iws
+/out/
+.gradle
+build/
+target/
+!gradle-wrapper.jar
