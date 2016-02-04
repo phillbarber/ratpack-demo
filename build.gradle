@@ -18,10 +18,10 @@ repositories {
     jcenter()
 }
 
+
+// The “ratpack” plugin is IDEA aware.
+// It will create a run configuration in IDEA to launch your app in your IDE, with hot reloading.
 dependencies {
-    testCompile 'junit:junit:4.11'
-    testCompile 'org.glassfish.jersey.core:jersey-client:2.22.1'
-    testCompile 'org.assertj:assertj-core:1.2.0'
     compile 'com.google.guava:guava:19.0'
 
     // This is a Guice ratpack app
@@ -29,13 +29,15 @@ dependencies {
     compile 'io.ratpack:ratpack-test:1.1.1'
     compile 'io.ratpack:ratpack-rx:1.1.1'
     compile 'com.github.tomakehurst:wiremock:1.53'
-    runtime 'org.slf4j:slf4j-simple:1.7.10'
+    //runtime 'org.slf4j:slf4j-simple:1.7.10'
     compile 'io.reactivex:rxjava:1.1.0'
 
-}
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.glassfish.jersey.core:jersey-client:2.22.1'
+    testCompile 'org.assertj:assertj-core:1.2.0'
+    testCompile 'uk.org.lidalia:slf4j-test:1.1.0'
 
-// The “ratpack” plugin is IDEA aware.
-// It will create a run configuration in IDEA to launch your app in your IDE, with hot reloading.
+}
 apply plugin: "idea"
 
 idea {
