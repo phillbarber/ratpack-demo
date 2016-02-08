@@ -1,6 +1,7 @@
-package com.github.phillbarber.scenario.observablethread;
+package com.github.phillbarber.scenario.observablethread.broken;
 
 import com.github.phillbarber.FunctionalTest;
+import org.junit.Ignore;
 import org.junit.Test;
 import ratpack.handling.internal.DoubleTransmissionException;
 import uk.org.lidalia.slf4jtest.LoggingEvent;
@@ -13,7 +14,8 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ObservableOnDifferentThreadTest extends FunctionalTest {
+public class ObservableOnDifferentThreadBrokenTest extends FunctionalTest {
+    public static final String ERROR_MESSAGE = "No response sent for GET request to /observable-different-thread-broken";
 
 
     //https://github.com/ratpack/ratpack/issues/682
@@ -23,15 +25,19 @@ public class ObservableOnDifferentThreadTest extends FunctionalTest {
 
 
         TestLoggerFactory.clear();
-        URI uri = new URI(getAddress().toString() + "observable-different-thread");
+        URI uri = new URI(getAddress().toString() + "observable-different-thread-broken");
         Response response = jerseyClient().target(uri).request().get();
 
         assertThat(response.getStatus()).isEqualTo(500);
 
+        //removing the following assertion, in some situations (e.g. when test run from gradle and not idea).
+        //will result in the double transmission not occuring.
+        //However, this test is non deterministic by its nature anyway.
+        assertThat(response.readEntity(String.class)).contains(ERROR_MESSAGE);
         List<LoggingEvent> allLoggingEvents = TestLoggerFactory.getAllLoggingEvents();
 
         assertThat(containsLogEventWithThrowable(allLoggingEvents, DoubleTransmissionException.class)).isTrue();
-        assertThat(containsLogEventWithMessage(allLoggingEvents, "No response sent for GET request to /observable-different-thread ")).isTrue();
+        assertThat(containsLogEventWithMessage(allLoggingEvents, ERROR_MESSAGE)).isTrue();
 
 
     }
