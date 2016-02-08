@@ -19,7 +19,7 @@ public class ObservableOnDifferentThreadFixedTest extends FunctionalTest {
     //https://github.com/ratpack/ratpack/issues/682
 
     @Test
-    public void observableOnDifferentThreadGivesError() throws URISyntaxException {
+    public void observableOnDifferentThreadWorksWhenConvertedToAPromise() throws URISyntaxException {
 
 
         TestLoggerFactory.clear();

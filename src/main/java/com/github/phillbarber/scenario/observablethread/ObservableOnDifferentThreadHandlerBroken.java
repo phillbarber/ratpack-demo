@@ -26,6 +26,5 @@ public class ObservableOnDifferentThreadHandlerBroken implements Handler {
             context.render("Downstream system returned: " + response);
                 }
         );
-
     }
 }
