@@ -11,48 +11,7 @@ buildscript {
 
 // The “ratpack” plugin applies the “application” plugin, making it easy to create a standalone application.
 // See: http://gradle.org/docs/current/userguide/application_plugin.html
-apply plugin: "io.ratpack.ratpack-java"
-apply plugin: "com.github.johnrengelman.shadow"
-
 repositories {
     jcenter()
 }
 
-
-// The “ratpack” plugin is IDEA aware.
-// It will create a run configuration in IDEA to launch your app in your IDE, with hot reloading.
-dependencies {
-    compile 'com.google.guava:guava:19.0'
-
-    // This is a Guice ratpack app
-    compile ratpack.dependency("guice")
-    compile 'io.ratpack:ratpack-test:1.1.1'
-    compile 'io.ratpack:ratpack-rx:1.1.1'
-    compile 'com.github.tomakehurst:wiremock:1.53'
-    //runtime 'org.slf4j:slf4j-simple:1.7.10'
-    compile 'io.reactivex:rxjava:1.1.0'
-
-    testCompile 'junit:junit:4.11'
-    testCompile 'org.glassfish.jersey.core:jersey-client:2.22.1'
-    testCompile 'org.assertj:assertj-core:1.2.0'
-    testCompile 'uk.org.lidalia:slf4j-test:1.1.0'
-
-}
-apply plugin: "idea"
-
-idea {
-    project {
-        //use JDK 1.8 in idea
-        jdkName "1.8"
-        languageLevel "1.8"
-        ipr {
-            withXml { provider ->
-                def node = provider.asNode()
-                //configure git support for the project in idea
-                node.component.find { it.'@name' == 'VcsDirectoryMappings' }?.mapping[0].'@vcs' = 'Git'
-            }
-        }
-    }
-}
-
-mainClassName = "com.github.phillbarber.MyApp"
