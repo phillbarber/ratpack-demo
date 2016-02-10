@@ -1,12 +1,11 @@
-package com.github.phillbarber.scenario.doubleobservable;
+package com.github.phillbarber;
 
 import com.google.common.collect.Lists;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import rx.Observable;
 
 import java.util.ArrayList;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class DoubleObservableServiceTest {
 
@@ -14,6 +13,6 @@ public class DoubleObservableServiceTest {
     public void emitsTwoItems(){
         Observable<String> contentFromDownstreamSystem = new DoubleObservableService().getContent();
         ArrayList<String> listOfItems = Lists.newArrayList(contentFromDownstreamSystem.toBlocking().getIterator());
-        assertThat(listOfItems.size()).isEqualTo(2);
+        Assertions.assertThat(listOfItems.size()).isEqualTo(2);
     }
 }

@@ -1,7 +1,6 @@
-package com.github.phillbarber.scenario.doubleobservable;
+package com.github.phillbarber;
 
 import rx.Observable;
-import rx.Subscriber;
 
 public class DoubleObservableService {
 

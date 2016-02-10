@@ -1,5 +1,6 @@
 package com.github.phillbarber.scenario.observablethread;
 
+import com.github.phillbarber.ObservableOnDifferentThreadService;
 import ratpack.handling.Context;
 import ratpack.handling.Handler;
 import ratpack.rx.RxRatpack;

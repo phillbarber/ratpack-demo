@@ -29,6 +29,7 @@ dependencies {
     compile 'io.ratpack:ratpack-test:1.1.1'
     compile 'io.ratpack:ratpack-rx:1.1.1'
     compile 'com.github.tomakehurst:wiremock:1.53'
+    compile project(':rx')
     //runtime 'org.slf4j:slf4j-simple:1.7.10'
     compile 'io.reactivex:rxjava:1.1.0'
 

@@ -2,12 +2,10 @@ package com.github.phillbarber;
 
 import com.github.phillbarber.scenario.doubleobservable.DoubleObservableHandler;
 import com.github.phillbarber.scenario.doubleobservable.DoubleObservableHandlerWithPromise;
-import com.github.phillbarber.scenario.doubleobservable.DoubleObservableService;
 import com.github.phillbarber.scenario.happy.HappyHandler;
 import com.github.phillbarber.scenario.happy.HappyService;
 import com.github.phillbarber.scenario.observablethread.ObservableOnDifferentThreadHandlerBroken;
 import com.github.phillbarber.scenario.observablethread.ObservableOnDifferentThreadHandlerFixed;
-import com.github.phillbarber.scenario.observablethread.ObservableOnDifferentThreadService;
 import io.netty.buffer.PooledByteBufAllocator;
 import ratpack.http.client.internal.DefaultHttpClient;
 import ratpack.server.RatpackServer;

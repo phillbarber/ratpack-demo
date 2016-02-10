@@ -1,5 +1,6 @@
 package com.github.phillbarber.scenario.doubleobservable;
 
+import com.github.phillbarber.DoubleObservableService;
 import ratpack.handling.Context;
 import ratpack.handling.Handler;
 import rx.Observable;

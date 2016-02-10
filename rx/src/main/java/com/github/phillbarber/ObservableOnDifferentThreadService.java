@@ -1,4 +1,4 @@
-package com.github.phillbarber.scenario.observablethread;
+package com.github.phillbarber;
 
 import rx.Observable;
 import rx.Subscriber;
