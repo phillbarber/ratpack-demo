@@ -2,11 +2,9 @@ package com.github.phillbarber.scenario.happy;
 
 import ratpack.handling.Context;
 import ratpack.handling.Handler;
+import ratpack.rx.RxRatpack;
 import rx.Observable;
 
-import javax.inject.Singleton;
-
-@Singleton
 public class HappyHandler implements Handler {
 
 
@@ -21,9 +19,9 @@ public class HappyHandler implements Handler {
 
         Observable<String> contentFromDownstreamSystem = happyPathService.getContentFromDownstreamSystem();
 
-        contentFromDownstreamSystem.subscribe(response -> {
-                    context.render("Downstream system returned: " + response);  //Render the response from the httpClient GET request
-                }
+        RxRatpack.promiseSingle(contentFromDownstreamSystem).then(response -> {
+                    context.render("Downstream system returned: " + response);
+            }
         );
     }
 }
