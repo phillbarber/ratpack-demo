@@ -1,6 +1,8 @@
 package com.github.phillbarber.scenario.observablethread;
 
 import com.github.phillbarber.ObservableOnDifferentThreadService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ratpack.handling.Context;
 import ratpack.handling.Handler;
 import ratpack.rx.RxRatpack;
@@ -12,6 +14,9 @@ import javax.inject.Singleton;
 public class ObservableOnDifferentThreadHandlerFixed implements Handler {
 
 
+    private Logger logger = LoggerFactory.getLogger(ObservableOnDifferentThreadHandlerFixed.class);
+
+
     private ObservableOnDifferentThreadService observableOnDifferentThreadService;
 
     public ObservableOnDifferentThreadHandlerFixed(ObservableOnDifferentThreadService observableOnDifferentThreadService) {
@@ -20,6 +25,8 @@ public class ObservableOnDifferentThreadHandlerFixed implements Handler {
 
     @Override
     public void handle(Context context) throws Exception {
+
+        logger.info("Request received");
 
         Observable<String> contentFromDownstreamSystem = observableOnDifferentThreadService.getContent();
 
