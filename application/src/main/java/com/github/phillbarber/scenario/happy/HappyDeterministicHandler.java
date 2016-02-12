@@ -8,16 +8,16 @@ import ratpack.handling.Handler;
 import ratpack.rx.RxRatpack;
 import rx.Observable;
 
-public class HappyHandler implements Handler {
+public class HappyDeterministicHandler implements Handler {
 
 
-    private Logger logger = LoggerFactory.getLogger(HappyHandler.class);
+    private Logger logger = LoggerFactory.getLogger(HappyDeterministicHandler.class);
 
 
-    private DownstreamHttpService happyPathService;
+    private DownstreamHttpService downstreamHttpService;
 
-    public HappyHandler(DownstreamHttpService downstreamHttpService) {
-        this.happyPathService = downstreamHttpService;
+    public HappyDeterministicHandler(DownstreamHttpService downstreamHttpService) {
+        this.downstreamHttpService = downstreamHttpService;
     }
 
     @Override
@@ -25,9 +25,12 @@ public class HappyHandler implements Handler {
 
         logger.info("Request received");
 
-        Observable<String> contentFromDownstreamSystem = happyPathService.getContentFromDownstreamSystem();
+        Observable<String> contentFromDownstreamSystem = downstreamHttpService.getContentFromDownstreamSystem();
 
         RxRatpack.promiseSingle(contentFromDownstreamSystem).then(
                 response -> context.render("Downstream system returned: " + response));
+
+        Thread.sleep(1000);
+        context.getResponse().status(500).send();
     }
 }

@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import static com.github.phillbarber.scenario.observablethread.broken.ObservableOnDifferentThreadBrokenTest.DOUBLE_TRANSMISSION_ERROR_MESASAGE;
 import static com.github.phillbarber.scenario.observablethread.broken.ObservableOnDifferentThreadBrokenTest.NO_RESPONSE_SENT_ERROR_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,35 +28,11 @@ public class ObservableOnDifferentThreadFixedTest extends FunctionalTest {
 
     @Test
     public void observableOnDifferentThreadWorksWhenConvertedToAPromise() throws URISyntaxException {
-
-
-  //      TestLoggerFactory.clear();
         URI uri = new URI(getAddress().toString() + "observable-different-thread-fixed");
         Response response = jerseyClient().target(uri).request().get();
 
         assertThat(response.getStatus()).isEqualTo(200);
-
         expectedLogs.assertLogsDoNotContain(Level.WARN, NO_RESPONSE_SENT_ERROR_MESSAGE);
-
-
-        //    List<LoggingEvent> allLoggingEvents = TestLoggerFactory.getAllLoggingEvents();
-
-      //  assertThat(containsLogEventWithThrowable(allLoggingEvents, DoubleTransmissionException.class)).isFalse();
-       // assertThat(containsLogEventWithMessage(allLoggingEvents, "No response sent for GET request to /observable-different-thread-broken ")).isFalse();
-
-
+        expectedLogs.assertLogsDoNotContain(Level.WARN, DOUBLE_TRANSMISSION_ERROR_MESASAGE);
     }
-
-//    private boolean containsLogEventWithThrowable(List<LoggingEvent> allLoggingEvents, Class clazz) {
-//
-//        return allLoggingEvents.parallelStream()
-//                .filter(loggingEventPredicate -> loggingEventPredicate.getThrowable().isPresent())
-//                .filter(loggingEvent -> loggingEvent.getThrowable().get().getClass().equals(clazz)).findAny().isPresent();
-//    }
-//
-//    private boolean containsLogEventWithMessage(List<LoggingEvent> allLoggingEvents, String message) {
-//
-//        return allLoggingEvents.parallelStream()
-//                .filter(loggingEvent -> loggingEvent.getMessage().contains(message)).findAny().isPresent();
-//    }
 }

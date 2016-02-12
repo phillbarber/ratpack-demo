@@ -1,5 +1,6 @@
-package com.github.phillbarber.scenario.happy;
+package com.github.phillbarber.scenario.happy.service;
 
+import com.github.phillbarber.scenario.happy.service.DownstreamHttpService;
 import com.google.common.collect.Lists;
 import io.netty.buffer.PooledByteBufAllocator;
 import org.junit.Ignore;
@@ -11,13 +12,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HappyServiceTest {
+public class DownstreamHttpServiceTest {
 
     //todo - need to remember who to call httpclient code within a ratpack managed thread.
     @Test
     @Ignore()
     public void happyPathHandlerReturnsYAY(){
-        Observable<String> contentFromDownstreamSystem = new HappyService(new DefaultHttpClient(PooledByteBufAllocator.DEFAULT, 100000)).getContentFromDownstreamSystem();
+        Observable<String> contentFromDownstreamSystem = new DownstreamHttpService(new DefaultHttpClient(PooledByteBufAllocator.DEFAULT, 100000)).getContentFromDownstreamSystem();
         List<String> result = Lists.newArrayList(contentFromDownstreamSystem.toBlocking().getIterator());
 
         assertThat(result.size()).isEqualTo(1);

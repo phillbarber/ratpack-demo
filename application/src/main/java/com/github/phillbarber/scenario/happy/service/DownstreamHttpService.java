@@ -1,4 +1,4 @@
-package com.github.phillbarber.scenario.happy;
+package com.github.phillbarber.scenario.happy.service;
 
 import ratpack.exec.Promise;
 import ratpack.http.client.HttpClient;
@@ -9,14 +9,14 @@ import rx.Observable;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class HappyService {
+public class DownstreamHttpService {
 
     private URI uri;
     private HttpClient httpClient;
 
 
 
-    public HappyService(HttpClient httpClient) {
+    public DownstreamHttpService(HttpClient httpClient) {
         this.httpClient = httpClient;
         try {
             uri = new URI("http://localhost:1234/fast-endpoint");

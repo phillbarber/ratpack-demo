@@ -2,8 +2,9 @@ package com.github.phillbarber;
 
 import com.github.phillbarber.scenario.doubleobservable.DoubleObservableHandler;
 import com.github.phillbarber.scenario.doubleobservable.DoubleObservableHandlerWithPromise;
+import com.github.phillbarber.scenario.happy.HappyDeterministicHandler;
 import com.github.phillbarber.scenario.happy.HappyHandler;
-import com.github.phillbarber.scenario.happy.HappyService;
+import com.github.phillbarber.scenario.happy.service.DownstreamHttpService;
 import com.github.phillbarber.scenario.observablethread.ObservableOnDifferentThreadHandlerBroken;
 import com.github.phillbarber.scenario.observablethread.ObservableOnDifferentThreadHandlerFixed;
 import io.netty.buffer.PooledByteBufAllocator;
@@ -17,12 +18,13 @@ public class MyApp {
 //todo - understand the following line
         DefaultHttpClient httpClient = new DefaultHttpClient(PooledByteBufAllocator.DEFAULT, 100000);
 
-        HappyService happyService = new HappyService(httpClient);
+        DownstreamHttpService downstreamHttpService = new DownstreamHttpService(httpClient);
 
         RatpackServer.start(s -> s
                 .handlers(chain -> {
                             chain
-                                    .path("happy", new HappyHandler(happyService))
+                                    .path("happy", new HappyHandler(downstreamHttpService))
+                                    .path("happy-deterministic", new HappyDeterministicHandler(downstreamHttpService))
                                     .path("double-observable-promise", new DoubleObservableHandlerWithPromise(new DoubleObservableService()))
                                     .path("observable-different-thread-broken", new ObservableOnDifferentThreadHandlerBroken(new ObservableOnDifferentThreadService()))
                                     .path("observable-different-thread-fixed", new ObservableOnDifferentThreadHandlerFixed(new ObservableOnDifferentThreadService()))
