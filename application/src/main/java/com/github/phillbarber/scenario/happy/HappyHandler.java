@@ -1,6 +1,6 @@
 package com.github.phillbarber.scenario.happy;
 
-import com.github.phillbarber.scenario.happy.service.DownstreamHttpService;
+import com.github.phillbarber.service.DownstreamHttpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ratpack.handling.Context;
@@ -28,6 +28,9 @@ public class HappyHandler implements Handler {
         Observable<String> contentFromDownstreamSystem = happyPathService.getContentFromDownstreamSystem();
 
         RxRatpack.promiseSingle(contentFromDownstreamSystem).then(
-                response -> context.render("Downstream system returned: " + response));
+                response -> {
+                    context.render("Downstream system returned: " + response);
+                    logger.info("Response sent to client");
+                });
     }
 }

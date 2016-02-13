@@ -1,5 +1,7 @@
-package com.github.phillbarber.scenario.happy.service;
+package com.github.phillbarber.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ratpack.exec.Promise;
 import ratpack.http.client.HttpClient;
 import ratpack.http.client.ReceivedResponse;
@@ -13,6 +15,7 @@ public class DownstreamHttpService {
 
     private URI uri;
     private HttpClient httpClient;
+    private Logger logger = LoggerFactory.getLogger(DownstreamHttpService.class);
 
 
 
@@ -27,8 +30,14 @@ public class DownstreamHttpService {
 
     public Observable<String> getContentFromDownstreamSystem(){
         Promise<ReceivedResponse> receivedResponsePromise = httpClient.get(uri);
+
+
+
         Observable<ReceivedResponse> observe = RxRatpack.observe(receivedResponsePromise);
-        return observe.map(o -> o.getBody().getText());
+        return observe.map(o -> {
+            logger.info("Got response from downstream.");
+            return o.getBody().getText();
+        });
     }
 
 }
