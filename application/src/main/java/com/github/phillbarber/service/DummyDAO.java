@@ -1,4 +1,4 @@
-package com.github.phillbarber.external.cassandra;
+package com.github.phillbarber.service;
 
 import com.datastax.driver.core.ResultSetFuture;
 import com.datastax.driver.core.Session;

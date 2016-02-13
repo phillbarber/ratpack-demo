@@ -1,4 +1,4 @@
-package com.github.phillbarber.external.http;
+package com.github.phillbarber.external;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
@@ -7,7 +7,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
-public class DownstreamService {
+public class DownstreamHTTPService {
 
     private WireMockServer wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().port(1234));
 
@@ -22,7 +22,7 @@ public class DownstreamService {
     }
 
     public static void main(String[] args) {
-        new DownstreamService().start();
+        new DownstreamHTTPService().start();
     }
 
 }
