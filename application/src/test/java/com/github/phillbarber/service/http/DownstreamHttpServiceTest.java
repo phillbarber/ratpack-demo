@@ -1,19 +1,16 @@
-package com.github.phillbarber.service;
+package com.github.phillbarber.service.http;
 
+import com.github.phillbarber.service.DownstreamHttpService;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import io.netty.buffer.PooledByteBufAllocator;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import ratpack.exec.ExecResult;
 import ratpack.http.client.internal.DefaultHttpClient;
 import ratpack.test.exec.ExecHarness;
-import rx.Observable;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.assertj.core.api.Assertions.assertThat;
 import static ratpack.rx.RxRatpack.promiseSingle;

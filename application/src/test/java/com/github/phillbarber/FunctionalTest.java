@@ -1,18 +1,15 @@
 package com.github.phillbarber;
 
-import com.github.phillbarber.external.DownstreamService;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.JerseyClient;
 import org.glassfish.jersey.client.JerseyClientBuilder;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import ratpack.test.MainClassApplicationUnderTest;
 import ratpack.test.ServerBackedApplicationUnderTest;
 
-import javax.ws.rs.core.Configuration;
 import java.net.URI;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;

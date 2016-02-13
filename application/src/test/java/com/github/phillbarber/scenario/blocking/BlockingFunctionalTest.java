@@ -23,7 +23,7 @@ public class BlockingFunctionalTest extends FunctionalTest {
 
 
     @Test
-    @Ignore("Not working")
+    @Ignore
     public void happyPathReturnsContent() throws URISyntaxException {
 
         URI uri = new URI(getAddress().toString() + "blocking");

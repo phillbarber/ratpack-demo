@@ -1,4 +1,4 @@
-package com.github.phillbarber.external;
+package com.github.phillbarber.external.http;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
