@@ -8,10 +8,15 @@ import com.github.phillbarber.scenario.happy.service.DownstreamHttpService;
 import com.github.phillbarber.scenario.observablethread.ObservableOnDifferentThreadHandlerBroken;
 import com.github.phillbarber.scenario.observablethread.ObservableOnDifferentThreadHandlerFixed;
 import io.netty.buffer.PooledByteBufAllocator;
+import ratpack.handling.internal.HeaderBasedRequestIdGenerator;
+import ratpack.handling.internal.UuidBasedRequestIdGenerator;
 import ratpack.http.client.internal.DefaultHttpClient;
+import ratpack.logging.MDCInterceptor;
 import ratpack.server.RatpackServer;
 
 public class MyApp {
+
+    public static final String REQUEST_ID = "Request-ID";
 
     public static void main(String[] args) throws Exception {
 
@@ -21,8 +26,10 @@ public class MyApp {
         DownstreamHttpService downstreamHttpService = new DownstreamHttpService(httpClient);
 
         RatpackServer.start(s -> s
+                .registryOf( registrySpec -> registrySpec.add(new HeaderBasedRequestIdGenerator(REQUEST_ID, new UuidBasedRequestIdGenerator())))
                 .handlers(chain -> {
                             chain
+                                    .all(new RequestIDHandler())
                                     .path("happy", new HappyHandler(downstreamHttpService))
                                     .path("happy-deterministic", new HappyDeterministicHandler(downstreamHttpService))
                                     .path("double-observable-promise", new DoubleObservableHandlerWithPromise(new DoubleObservableService()))
