@@ -1,5 +1,7 @@
 package com.github.phillbarber.external;
 
+import com.datastax.driver.core.Cluster;
+import com.datastax.driver.core.SocketOptions;
 import com.google.common.collect.ImmutableMap;
 import org.scassandra.Scassandra;
 import org.scassandra.ScassandraFactory;
@@ -44,4 +46,20 @@ public class DownstreamDBWithDummyValue {
         return primingClient;
     }
 
+    public static void main(String[] args) {
+        new DownstreamDBWithDummyValue().start();
+    }
+
+    public static class ClusterFactory {
+
+        public Cluster getCluster() {
+            SocketOptions socketOptions = new SocketOptions();
+            socketOptions.setReadTimeoutMillis(5000);
+            return Cluster.builder()
+                    .addContactPoint("localhost")
+                    .withPort(8042)
+                    .withSocketOptions(socketOptions)
+                    .build();
+        }
+    }
 }

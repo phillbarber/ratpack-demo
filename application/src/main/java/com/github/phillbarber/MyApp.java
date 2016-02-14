@@ -1,7 +1,7 @@
 package com.github.phillbarber;
 
 import com.datastax.driver.core.Session;
-import com.github.phillbarber.external.ClusterFactory;
+import com.github.phillbarber.external.DownstreamDBWithDummyValue;
 import com.github.phillbarber.scenario.blocking.BlockingHandler;
 import com.github.phillbarber.scenario.cassandra.HappyCassandraHandler;
 import com.github.phillbarber.scenario.doubleobservable.DoubleObservableHandler;
@@ -14,6 +14,7 @@ import com.github.phillbarber.service.DownstreamHttpService;
 import com.github.phillbarber.service.DummyDAO;
 import io.netty.buffer.PooledByteBufAllocator;
 import ratpack.http.client.internal.DefaultHttpClient;
+import ratpack.rx.RxRatpack;
 import ratpack.server.RatpackServer;
 
 public class MyApp {
@@ -21,11 +22,12 @@ public class MyApp {
 
     public static void main(String[] args) throws Exception {
 
+        RxRatpack.initialize();
         DefaultHttpClient httpClient = new DefaultHttpClient(PooledByteBufAllocator.DEFAULT, 100000);
 
         DownstreamHttpService downstreamHttpService = new DownstreamHttpService(httpClient);
 
-        Session session = new ClusterFactory().getCluster().newSession();
+        Session session = new DownstreamDBWithDummyValue.ClusterFactory().getCluster().newSession();
 
         RatpackServer.start(s -> s
                 .serverConfig(serverConfigBuilder -> {
@@ -35,15 +37,15 @@ public class MyApp {
                 .handlers(chain -> {
 
                     chain
-                                    .path("happy", new HappyHandler(downstreamHttpService))
-                                    .path("happy-cassandra", new HappyCassandraHandler(new DummyDAO(session)))
-                                    .path("happy-deterministic", new HappyDeterministicHandler(downstreamHttpService))
-                                    .path("blocking", new BlockingHandler(downstreamHttpService))
+                        .path("happy", new HappyHandler(downstreamHttpService))
+                        .path("happy-cassandra", new HappyCassandraHandler(new DummyDAO(session)))
+                        .path("happy-deterministic", new HappyDeterministicHandler(downstreamHttpService))
+                        .path("blocking", new BlockingHandler(downstreamHttpService))
 
-                                    .path("double-observable-promise", new DoubleObservableHandlerWithPromise(new DoubleObservableService()))
-                                    .path("observable-different-thread-broken", new ObservableOnDifferentThreadHandlerBroken(new ObservableOnDifferentThreadService()))
-                                    .path("observable-different-thread-fixed", new ObservableOnDifferentThreadHandlerFixed(new ObservableOnDifferentThreadService()))
-                                    .path("double-observable", new DoubleObservableHandler(new DoubleObservableService()));
+                        .path("double-observable-promise", new DoubleObservableHandlerWithPromise(new DoubleObservableService()))
+                        .path("observable-different-thread-broken", new ObservableOnDifferentThreadHandlerBroken(new ObservableOnDifferentThreadService()))
+                        .path("observable-different-thread-fixed", new ObservableOnDifferentThreadHandlerFixed(new ObservableOnDifferentThreadService()))
+                        .path("double-observable", new DoubleObservableHandler(new DoubleObservableService()));
                         }
                 )
         );

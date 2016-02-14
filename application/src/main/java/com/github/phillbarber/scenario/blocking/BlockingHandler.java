@@ -3,13 +3,10 @@ package com.github.phillbarber.scenario.blocking;
 import com.github.phillbarber.service.DownstreamHttpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ratpack.exec.Promise;
-import ratpack.func.Action;
 import ratpack.handling.Context;
 import ratpack.handling.Handler;
 import ratpack.rx.RxRatpack;
 import rx.Observable;
-import rx.observables.BlockingObservable;
 
 public class BlockingHandler implements Handler {
 
@@ -28,18 +25,14 @@ public class BlockingHandler implements Handler {
 
         logger.info("Request received");
 
+        Observable<String> contentFromDownstreamSystem = happyPathService.getContentFromDownstreamSystem();
 
-        Promise.of(o -> {}).then(new Action<Object>() {
-            @Override
-            public void execute(Object o) throws Exception {
-                logger.info("WWWWAAAA");
-                Observable<String> contentFromDownstreamSystem = happyPathService.getContentFromDownstreamSystem();
-                BlockingObservable<String> stringBlockingObservable = contentFromDownstreamSystem.toBlocking();
-                context.render("Downstream system returned: " + stringBlockingObservable.first());
-            }
-        });
+        Thread.sleep(1000);
 
-        logger.info("Response sent to client");
-
+        RxRatpack.promiseSingle(contentFromDownstreamSystem).then(
+                response -> {
+                    context.render("Downstream system returned: " + response);
+                    logger.info("Response sent to client");
+                });
     }
 }
