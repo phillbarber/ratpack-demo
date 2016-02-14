@@ -1,4 +1,4 @@
-package com.github.phillbarber.service;
+package com.github.phillbarber.service.blocking1;
 
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.ResultSetFuture;
@@ -14,9 +14,11 @@ public class DummyDAO {
         this.session = session;
     }
 
-    public Observable<String> getRowFromDB() {
-        ResultSetFuture resultSetFuture = session.executeAsync(new SimpleStatement("select dummy from dummy"));
-        Observable<ResultSet> resultSetObservable = Observable.from(resultSetFuture);
+    public Observable<String> getRowFromDB() throws Exception{
+        Observable<ResultSet> resultSetObservable =
+                Observable.just(session.executeAsync(new SimpleStatement("select dummy from dummy")).get());
         return resultSetObservable.map(resultSet -> resultSet.one().getString("dummy"));
     }
 }
+
+
