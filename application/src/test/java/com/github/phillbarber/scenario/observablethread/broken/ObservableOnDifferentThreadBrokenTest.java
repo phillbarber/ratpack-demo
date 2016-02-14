@@ -27,7 +27,7 @@ public class ObservableOnDifferentThreadBrokenTest extends FunctionalTest {
     public ExpectedLogs expectedLogs = ExpectedLogs.forRootLogger();
 
     @Test
-    public void observableOnDifferentThreadGivesError() throws URISyntaxException {
+    public void observableOnDifferentThreadGivesError() throws URISyntaxException, InterruptedException {
 
 
         URI uri = new URI(getAddress().toString() + "observable-different-thread-broken");
@@ -40,6 +40,9 @@ public class ObservableOnDifferentThreadBrokenTest extends FunctionalTest {
         //will result in the double transmission not occuring.
         //However, this test is non deterministic by its nature anyway.
         assertThat(response.readEntity(String.class)).contains(NO_RESPONSE_SENT_ERROR_MESSAGE);
+
+        //nasty - but this scenario is non deterministic so not much choice
+        Thread.sleep(1000);
 
         expectedLogs.assertLogsContain(Level.WARN, NO_RESPONSE_SENT_ERROR_MESSAGE);
         expectedLogs.assertLogsContain(Level.WARN, DOUBLE_TRANSMISSION_ERROR_MESASAGE);
