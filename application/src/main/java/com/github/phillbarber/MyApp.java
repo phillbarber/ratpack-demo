@@ -26,7 +26,7 @@ public class MyApp {
         RatpackServer.start(s -> s
                 .serverConfig(serverConfigBuilder -> {
                     serverConfigBuilder.port(8080);
-                    serverConfigBuilder.threads(1);
+                    //serverConfigBuilder.threads(1);
                 })
                 .handlers(chain -> {
 
