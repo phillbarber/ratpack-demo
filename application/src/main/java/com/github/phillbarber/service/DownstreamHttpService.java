@@ -31,8 +31,6 @@ public class DownstreamHttpService {
     public Observable<String> getContentFromDownstreamSystem(){
         Promise<ReceivedResponse> receivedResponsePromise = httpClient.get(uri);
 
-
-
         Observable<ReceivedResponse> observe = RxRatpack.observe(receivedResponsePromise);
         return observe.map(o -> {
             logger.info("Got response from downstream.");
