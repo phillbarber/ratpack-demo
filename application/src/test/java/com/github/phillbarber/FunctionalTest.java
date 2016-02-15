@@ -22,13 +22,13 @@ public class FunctionalTest {
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(wireMockConfig().port(1234));
 
+    private ServerBackedApplicationUnderTest serverBackedApplicationUnderTest = new MainClassApplicationUnderTest(MyApp.class);
+
     @Before
     public void setup(){
         wireMockRule.stubFor(get(urlEqualTo("/fast-endpoint")).willReturn(aResponse().withStatus(200).withBody("YAY").withFixedDelay(100)));
         wireMockRule.stubFor(get(urlEqualTo("/slow-endpoint")).willReturn(aResponse().withStatus(200).withBody("YAY").withFixedDelay(3000)));
     }
-
-    private ServerBackedApplicationUnderTest serverBackedApplicationUnderTest = new MainClassApplicationUnderTest(MyApp.class);
 
     public JerseyClient jerseyClient() {
         ClientConfig config = new ClientConfig();
