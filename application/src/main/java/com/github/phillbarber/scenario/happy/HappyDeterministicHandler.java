@@ -30,7 +30,7 @@ public class HappyDeterministicHandler implements Handler {
         RxRatpack.promiseSingle(contentFromDownstreamSystem).then(
                 response -> context.render("Downstream system returned: " + response));
 
-        Thread.sleep(1000);
+        //Thread.sleep(1000);
         context.getResponse().status(500).send();
     }
 }
