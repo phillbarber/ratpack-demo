@@ -35,7 +35,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
 
     compile 'com.datastax.cassandra:cassandra-driver-core:2.1.4'
-    compile 'org.scassandra:java-client:1.0.0'
+    //compile 'org.scassandra:java-client:1.0.0'
 
 
 

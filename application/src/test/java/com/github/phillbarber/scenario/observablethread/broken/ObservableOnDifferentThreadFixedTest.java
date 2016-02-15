@@ -35,4 +35,5 @@ public class ObservableOnDifferentThreadFixedTest extends FunctionalTest {
         expectedLogs.assertLogsDoNotContain(Level.WARN, NO_RESPONSE_SENT_ERROR_MESSAGE);
         expectedLogs.assertLogsDoNotContain(Level.WARN, DOUBLE_TRANSMISSION_ERROR_MESASAGE);
     }
+
 }
