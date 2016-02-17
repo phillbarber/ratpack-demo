@@ -1,4 +1,4 @@
-package com.github.phillbarber.scenario.observablethread.broken;
+package com.github.phillbarber.scenario.observablethread;
 
 import ch.qos.logback.classic.Level;
 import com.github.phillbarber.ExpectedLogs;
@@ -12,8 +12,8 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static com.github.phillbarber.scenario.observablethread.broken.ObservableOnDifferentThreadBrokenTest.DOUBLE_TRANSMISSION_ERROR_MESASAGE;
-import static com.github.phillbarber.scenario.observablethread.broken.ObservableOnDifferentThreadBrokenTest.NO_RESPONSE_SENT_ERROR_MESSAGE;
+import static com.github.phillbarber.scenario.observablethread.ObservableOnDifferentThreadBrokenTest.DOUBLE_TRANSMISSION_ERROR_MESASAGE;
+import static com.github.phillbarber.scenario.observablethread.ObservableOnDifferentThreadBrokenTest.NO_RESPONSE_SENT_ERROR_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ObservableOnDifferentThreadFixedTest extends FunctionalTest {

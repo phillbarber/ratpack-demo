@@ -1,4 +1,4 @@
-package com.github.phillbarber.scenario.observablethread.broken;
+package com.github.phillbarber.scenario.observablethread;
 
 import ch.qos.logback.classic.Level;
 import com.github.phillbarber.ExpectedLogs;
