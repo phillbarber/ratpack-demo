@@ -1,14 +1,14 @@
 package com.github.phillbarber.service.cassandra;
 
 import com.github.phillbarber.external.DownstreamDBWithDummyValue;
-import com.github.phillbarber.service.DummyDAO;
+import com.github.phillbarber.service.BlockingCassandraDAO;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DummyDAOTest {
+public class BlockingCassandraDAOTest {
 
     private DownstreamDBWithDummyValue downstreamDBWithDummyValue = new DownstreamDBWithDummyValue();
 
@@ -22,13 +22,10 @@ public class DummyDAOTest {
         downstreamDBWithDummyValue.stop();
     }
 
-
-
-
     @Test
     public void shouldReturnRowFromDB(){
-        DummyDAO dummyDAO = new DummyDAO(new DownstreamDBWithDummyValue.ClusterFactory().getCluster().newSession());
-        assertThat(dummyDAO.getRowFromDB().toBlocking().first()).isEqualTo("Amazing Value");
+        BlockingCassandraDAO blockingCassandraDAO = new BlockingCassandraDAO(new DownstreamDBWithDummyValue.ClusterFactory().getCluster().newSession());
+        assertThat(blockingCassandraDAO.getRowFromDB().toBlocking().first()).isEqualTo("Amazing Value");
     }
 
 

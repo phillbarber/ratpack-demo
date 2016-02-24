@@ -6,11 +6,11 @@ import com.datastax.driver.core.Session;
 import com.datastax.driver.core.SimpleStatement;
 import rx.Observable;
 
-public class DummyDAO {
+public class BlockingCassandraDAO {
 
     private Session session;
 
-    public DummyDAO(Session session) {
+    public BlockingCassandraDAO(Session session) {
         this.session = session;
     }
 

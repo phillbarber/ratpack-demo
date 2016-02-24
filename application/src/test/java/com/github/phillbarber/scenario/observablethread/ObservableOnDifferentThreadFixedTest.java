@@ -5,8 +5,6 @@ import com.github.phillbarber.ExpectedLogs;
 import com.github.phillbarber.FunctionalTest;
 import org.junit.Rule;
 import org.junit.Test;
-//import uk.org.lidalia.slf4jtest.LoggingEvent;
-//import uk.org.lidalia.slf4jtest.TestLoggerFactory;
 
 import javax.ws.rs.core.Response;
 import java.net.URI;

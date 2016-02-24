@@ -14,6 +14,7 @@ import static org.scassandra.http.client.PrimingRequest.then;
 
 public class DownstreamDBWithDummyValue {
 
+    public static final long CASSANDRA_DELAY_IN_MILLIS = 1000l;
     private PrimingClient primingClient;
     private Scassandra scassandra;
 
@@ -33,8 +34,9 @@ public class DownstreamDBWithDummyValue {
         primingClient.prime(PrimingRequest.queryBuilder()
                 .withQuery("select dummy from dummy")
                 .withThen(then()
-                        .withRows(row))//.withFixedDelay(1000l))
-                .build());
+                        .withRows(row)
+                        .withFixedDelay(CASSANDRA_DELAY_IN_MILLIS)
+                .build()));
     }
 
 
