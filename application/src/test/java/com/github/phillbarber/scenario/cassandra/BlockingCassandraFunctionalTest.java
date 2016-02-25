@@ -43,6 +43,14 @@ public class BlockingCassandraFunctionalTest extends FunctionalTest {
 
         Response response = getResponseFromHandler();
 
+        getResponseFromHandler();
+
+        getResponseFromHandler();
+
+        getResponseFromHandler();
+
+        getResponseFromHandler();
+
         assertThat(response.getStatus()).isEqualTo(200);
         assertThat(response.readEntity(String.class)).isEqualTo("DB Returned: Amazing Value");
     }
@@ -52,22 +60,6 @@ public class BlockingCassandraFunctionalTest extends FunctionalTest {
         Response response = jerseyClient().target(uri).request().get();
         logger.info("DoneDone: {}", response);
         return response;
-    }
-
-    @Test(timeout = DownstreamDBWithDummyValue.CASSANDRA_DELAY_IN_MILLIS * 2)
-    @Ignore("This test will fail since the call is blocking")
-    public void handlerIsBlocking() throws InterruptedException {
-
-        List<Callable<Response>> twoCallsToHandler = Arrays.asList(this::getResponseFromHandler, this::getResponseFromHandler);
-
-        List<Response> responses = executeTasksInParallel(twoCallsToHandler);
-
-        assertThat(responses.size()).isEqualTo(twoCallsToHandler.size());
-        responses.forEach(response -> {
-            assertThat(response.getStatus()).isEqualTo(200);
-        });
-
-
     }
 
     private List<Response> executeTasksInParallel(List<Callable<Response>> tasks) throws InterruptedException {
@@ -81,5 +73,32 @@ public class BlockingCassandraFunctionalTest extends FunctionalTest {
         }).collect(Collectors.toList());
         executorService.shutdownNow();
         return responses;
+    }
+
+    //@Ignore("This test will fail since the call is blocking")
+    //@Test(timeout = DownstreamDBWithDummyValue.CASSANDRA_DELAY_IN_MILLIS * 12)
+    @Test
+    public void handlerIsBlocking() throws InterruptedException {
+
+        List<Callable<Response>> twoCallsToHandler = Arrays.asList(this::getResponseFromHandler,
+                this::getResponseFromHandler,
+                this::getResponseFromHandler,
+                this::getResponseFromHandler,
+                this::getResponseFromHandler,
+                this::getResponseFromHandler,
+                this::getResponseFromHandler,
+                this::getResponseFromHandler,
+                this::getResponseFromHandler,
+                this::getResponseFromHandler);
+
+        List<Response> responses = executeTasksInParallel(twoCallsToHandler);
+
+
+        assertThat(responses.size()).isEqualTo(twoCallsToHandler.size());
+        responses.forEach(response -> {
+            assertThat(response.getStatus()).isEqualTo(200);
+        });
+
+
     }
 }
