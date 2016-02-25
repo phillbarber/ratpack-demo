@@ -11,15 +11,12 @@ import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.Response;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CassandraNonBlockingHotTest extends FunctionalTest {
 
-    public static final String CASSANDRA_BLOCKING_OBVIOUSLY_URI = "cassandra-blocking-subscribe";
     private static final int NUMBER_OF_CALLS = 8;
     private DownstreamDBWithDummyValue downstreamDBWithDummyValue = new DownstreamDBWithDummyValue();
 
@@ -38,20 +35,27 @@ public class CassandraNonBlockingHotTest extends FunctionalTest {
 
     @Test
     public void returnsContent() throws URISyntaxException {
-        Response response = getResponseFromHandler(CASSANDRA_BLOCKING_OBVIOUSLY_URI);
-        assertThat(response.getStatus()).isEqualTo(200);
-        assertThat(response.readEntity(String.class)).isEqualTo("DB Returned: Amazing Value");
+        Response response = getResponseFromHandler("cassandra-nonblocking-hot");
+        verifyResponse(response);
     }
 
     @Test(timeout=DownstreamDBWithDummyValue.CASSANDRA_DELAY_IN_MILLIS * NUMBER_OF_CALLS)
     public void handlerIsNotBlocking() throws InterruptedException {
 
-        List<Response> responses = new ConcurrentExecutor(() -> getResponseFromHandler(CASSANDRA_BLOCKING_OBVIOUSLY_URI), NUMBER_OF_CALLS).executeRequestsInParallel();
+        List<Response> responses = new ConcurrentExecutor(() -> getResponseFromHandler("cassandra-nonblocking-hot"), NUMBER_OF_CALLS).executeRequestsInParallel();
 
-        assertThat(responses.size()).isEqualTo(NUMBER_OF_CALLS);
+        verifyAllResponses(responses, NUMBER_OF_CALLS);
+    }
+
+    private void verifyAllResponses(List<Response> responses, int numberOfCalls) {
+        assertThat(responses.size()).isEqualTo(numberOfCalls);
         responses.forEach(response -> {
-            assertThat(response.getStatus()).isEqualTo(200);
-            assertThat(response.readEntity(String.class)).isEqualTo("DB Returned: Amazing Value");
+            verifyResponse(response);
         });
+    }
+
+    private void verifyResponse(Response response) {
+        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(response.readEntity(String.class)).isEqualTo("DB Returned: Amazing Value");
     }
 }
