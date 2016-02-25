@@ -24,7 +24,7 @@ public class BlockingCassandraHandler implements Handler {
 
         logger.info("Request received");
 
-        Observable<String> contentFromDownstreamSystem = blockingCassandraDAO.getRowFromDB();
+        Observable<String> contentFromDownstreamSystem = blockingCassandraDAO.getValueFromDB();
 
         RxRatpack.promiseSingle(contentFromDownstreamSystem).then(
                 response -> {

@@ -1,19 +1,18 @@
-package com.github.phillbarber.service;
+package com.github.phillbarber.service.dao;
 
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.ResultSetFuture;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.SimpleStatement;
-import ratpack.rx.RxRatpack;
 import rx.Observable;
 import rx.observable.ListenableFutureObservable;
 import rx.schedulers.Schedulers;
 
-public class BlockingCassandraDAO {
+public class NonBlockingHotDAO implements DAO {
 
     private Session session;
 
-    public BlockingCassandraDAO(Session session) {
+    public NonBlockingHotDAO(Session session) {
         this.session = session;
     }
 
@@ -24,7 +23,4 @@ public class BlockingCassandraDAO {
             return resultSet.one().getString("dummy");
         });
     }
-
-
-
 }
