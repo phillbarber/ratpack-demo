@@ -15,11 +15,13 @@ import ratpack.test.ServerBackedApplicationUnderTest;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class FunctionalTest {
 
@@ -37,7 +39,7 @@ public class FunctionalTest {
     public void setup(){
         wireMockRule.stubFor(get(urlEqualTo("/fast-endpoint")).willReturn(aResponse().withStatus(200).withBody("YAY").withFixedDelay(100)));
         wireMockRule.stubFor(get(urlEqualTo("/slow-endpoint")).willReturn(aResponse().withStatus(200).withBody("YAY").withFixedDelay(3000)));
-        //call this method first to ensure the application is started.
+        //call this method first to ensure the application is started! If you don't do this, you can end up staring app multiple times!
         getAddress();
     }
 
@@ -62,6 +64,17 @@ public class FunctionalTest {
 
     public URI getAddress() {
         return serverBackedApplicationUnderTest.getAddress();
+    }
+
+
+    public void verifyAllDbHttpResponses(List<Response> responses, int expectedNumberOfCalls) {
+        assertThat(responses).hasSize(expectedNumberOfCalls);
+        responses.forEach(this::verifyDbHttpResponse);
+    }
+
+    public void verifyDbHttpResponse(Response response) {
+        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(response.readEntity(String.class)).isEqualTo("DB Returned: Amazing Value");
     }
 
 }
