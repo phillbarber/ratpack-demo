@@ -19,7 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CassandraNonBlockingHotTest extends FunctionalTest {
 
-    public static final String CASSANDRA_BLOCKING_OBVIOUSLY_URI = "cassandra-nonblocking-hot";
+    public static final String CASSANDRA_BLOCKING_OBVIOUSLY_URI = "cassandra-blocking-subscribe";
+    private static final int NUMBER_OF_CALLS = 8;
     private DownstreamDBWithDummyValue downstreamDBWithDummyValue = new DownstreamDBWithDummyValue();
 
     private Logger logger = LoggerFactory.getLogger(CassandraNonBlockingHotTest.class);
@@ -42,23 +43,15 @@ public class CassandraNonBlockingHotTest extends FunctionalTest {
         assertThat(response.readEntity(String.class)).isEqualTo("DB Returned: Amazing Value");
     }
 
-
-    @Test(timeout=DownstreamDBWithDummyValue.CASSANDRA_DELAY_IN_MILLIS * 4)
+    @Test(timeout=DownstreamDBWithDummyValue.CASSANDRA_DELAY_IN_MILLIS * NUMBER_OF_CALLS)
     public void handlerIsNotBlocking() throws InterruptedException {
 
-        List<Callable<Response>> twoCallsToHandler = Arrays.asList(
-                () -> getResponseFromHandler(CASSANDRA_BLOCKING_OBVIOUSLY_URI),
-                () -> getResponseFromHandler(CASSANDRA_BLOCKING_OBVIOUSLY_URI),
-                () -> getResponseFromHandler(CASSANDRA_BLOCKING_OBVIOUSLY_URI),
-                () -> getResponseFromHandler(CASSANDRA_BLOCKING_OBVIOUSLY_URI));
+        List<Response> responses = new ConcurrentExecutor(() -> getResponseFromHandler(CASSANDRA_BLOCKING_OBVIOUSLY_URI), NUMBER_OF_CALLS).executeRequestsInParallel();
 
-        List<Response> responses = new ConcurrentExecutor(twoCallsToHandler).executeRequestsInParallel();
-
-        assertThat(responses.size()).isEqualTo(twoCallsToHandler.size());
+        assertThat(responses.size()).isEqualTo(NUMBER_OF_CALLS);
         responses.forEach(response -> {
             assertThat(response.getStatus()).isEqualTo(200);
+            assertThat(response.readEntity(String.class)).isEqualTo("DB Returned: Amazing Value");
         });
-
-
     }
 }

@@ -37,6 +37,8 @@ public class FunctionalTest {
     public void setup(){
         wireMockRule.stubFor(get(urlEqualTo("/fast-endpoint")).willReturn(aResponse().withStatus(200).withBody("YAY").withFixedDelay(100)));
         wireMockRule.stubFor(get(urlEqualTo("/slow-endpoint")).willReturn(aResponse().withStatus(200).withBody("YAY").withFixedDelay(3000)));
+        //call this method first to ensure the application is started.
+        getAddress();
     }
 
     public JerseyClient jerseyClient() {

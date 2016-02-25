@@ -3,11 +3,14 @@ package com.github.phillbarber.service.dao;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.SimpleStatement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rx.Observable;
 
 public class BlockingObviouslyDAO implements DAO {
 
     private Session session;
+    private Logger logger = LoggerFactory.getLogger(BlockingObviouslyDAO.class);
 
     public BlockingObviouslyDAO(Session session) {
         this.session = session;

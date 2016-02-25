@@ -1,26 +1,25 @@
 package com.github.phillbarber;
 
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-/**
- * Created by pergola on 25/02/16.
- */
 public class ConcurrentExecutor {
 
-    private List<Callable<Response>> tasks;
+    private List<Callable<Response>> tasks = new ArrayList<>();
 
-    public ConcurrentExecutor(List<Callable<Response>> tasks) {
-        this.tasks = tasks;
+    public ConcurrentExecutor(Callable<Response> task, int numberOfCalls) {
+        IntStream.range(0, numberOfCalls).forEach(i -> tasks.add(task));
     }
 
     public List<Response> executeRequestsInParallel() throws InterruptedException {
 
-        ExecutorService executorService = Executors.newFixedThreadPool(this.tasks.size());
+        ExecutorService executorService = Executors.newFixedThreadPool(tasks.size());
         List<Response> responses = executorService.invokeAll(tasks).parallelStream().map(responseFuture -> {
             try {
                 return responseFuture.get();
