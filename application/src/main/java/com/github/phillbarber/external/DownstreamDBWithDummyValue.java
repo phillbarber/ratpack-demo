@@ -14,7 +14,7 @@ import static org.scassandra.http.client.PrimingRequest.then;
 
 public class DownstreamDBWithDummyValue {
 
-    public static final long CASSANDRA_DELAY_IN_MILLIS = 1000l;
+    public static final long CASSANDRA_DELAY_IN_MILLIS = 3000l;
     private PrimingClient primingClient;
     private Scassandra scassandra;
 

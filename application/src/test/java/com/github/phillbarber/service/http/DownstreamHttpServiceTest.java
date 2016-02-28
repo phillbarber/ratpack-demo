@@ -22,7 +22,7 @@ public class DownstreamHttpServiceTest {
 
     @Before
     public void setup(){
-        wireMockRule.stubFor(get(urlEqualTo("/fast-endpoint")).willReturn(aResponse().withStatus(200).withBody("YAY").withFixedDelay(100)));
+        wireMockRule.stubFor(get(urlEqualTo("/slow-endpoint")).willReturn(aResponse().withStatus(200).withBody("YAY").withFixedDelay(100)));
     }
 
     @Test
