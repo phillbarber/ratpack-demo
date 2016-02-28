@@ -3,9 +3,9 @@ package com.github.phillbarber.service.dao;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.SimpleStatement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import rx.Observable;
+
+import java.util.concurrent.ExecutionException;
 
 public class BlockingObviouslyDAO implements DAO {
 
@@ -24,7 +24,7 @@ public class BlockingObviouslyDAO implements DAO {
         }
     }
 
-    private String getValue() throws InterruptedException, java.util.concurrent.ExecutionException {
+    private String getValue() throws InterruptedException, ExecutionException {
         ResultSet rows = session.executeAsync(new SimpleStatement("select dummy from dummy")).get();
         return rows.one().getString("dummy");
     }
