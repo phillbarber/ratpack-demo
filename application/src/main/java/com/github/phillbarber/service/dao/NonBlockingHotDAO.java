@@ -15,12 +15,10 @@ public class NonBlockingHotDAO implements DAO {
     public NonBlockingHotDAO(Session session) {
         this.session = session;
     }
-
+    //See https://github.com/ReactiveX/RxJavaGuava
     public Observable<String> getValueFromDB() {
         ResultSetFuture resultSetFuture = session.executeAsync(new SimpleStatement("select dummy from dummy"));
         Observable<ResultSet> resultSetObservable = ListenableFutureObservable.from(resultSetFuture, Schedulers.computation());
-        return resultSetObservable.map(resultSet -> {
-            return resultSet.one().getString("dummy");
-        });
+        return resultSetObservable.map(resultSet -> resultSet.one().getString("dummy"));
     }
 }

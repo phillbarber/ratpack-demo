@@ -3,6 +3,7 @@ package com.github.phillbarber.scenario.happy;
 import com.github.phillbarber.service.DownstreamHttpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ratpack.exec.Promise;
 import ratpack.handling.Context;
 import ratpack.handling.Handler;
 import ratpack.rx.RxRatpack;
@@ -27,9 +28,10 @@ public class HappyHandler implements Handler {
 
         Observable<String> contentFromDownstreamSystem = happyPathService.getContentFromDownstreamSystem();
 
-        RxRatpack.promiseSingle(contentFromDownstreamSystem).then(
-                response -> {
-                    context.render("Downstream system returned: " + response);
+        Promise<String> stringPromise = RxRatpack.promiseSingle(contentFromDownstreamSystem);
+        stringPromise.then(
+                responseFromDownStreamSystem -> {
+                    context.render("Downstream system returned: " + responseFromDownStreamSystem);
                     logger.info("Response sent to client");
                 });
     }

@@ -22,7 +22,7 @@ public class DownstreamHttpService {
     public DownstreamHttpService(HttpClient httpClient) {
         this.httpClient = httpClient;
         try {
-            uri = new URI("http://localhost:1234/fast-endpoint");
+            uri = new URI("http://localhost:1234/slow-endpoint");
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -32,9 +32,9 @@ public class DownstreamHttpService {
         Promise<ReceivedResponse> receivedResponsePromise = httpClient.get(uri);
 
         Observable<ReceivedResponse> observe = RxRatpack.observe(receivedResponsePromise);
-        return observe.map(o -> {
+        return observe.map(receivedResponse -> {
             logger.info("Got response from downstream.");
-            return o.getBody().getText();
+            return receivedResponse.getBody().getText();
         });
     }
 

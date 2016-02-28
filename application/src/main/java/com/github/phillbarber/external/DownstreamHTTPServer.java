@@ -7,7 +7,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
-public class DownstreamHTTPService {
+public class DownstreamHTTPServer {
 
     private WireMockServer wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().port(1234));
 
@@ -22,7 +22,7 @@ public class DownstreamHTTPService {
     }
 
     public static void main(String[] args) {
-        new DownstreamHTTPService().start();
+        new DownstreamHTTPServer().start();
     }
 
 }
