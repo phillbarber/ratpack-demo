@@ -10,7 +10,6 @@ import rx.Observable;
 public class BlockingObviouslyDAO implements DAO {
 
     private Session session;
-    private Logger logger = LoggerFactory.getLogger(BlockingObviouslyDAO.class);
 
     public BlockingObviouslyDAO(Session session) {
         this.session = session;
@@ -18,12 +17,16 @@ public class BlockingObviouslyDAO implements DAO {
 
     public Observable<String> getValueFromDB() {
         try {
-            ResultSet rows = session.executeAsync(new SimpleStatement("select dummy from dummy")).get();
-            String result = rows.one().getString("dummy");
+            String result = getValue();
             return Observable.just(result);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String getValue() throws InterruptedException, java.util.concurrent.ExecutionException {
+        ResultSet rows = session.executeAsync(new SimpleStatement("select dummy from dummy")).get();
+        return rows.one().getString("dummy");
     }
 }
 

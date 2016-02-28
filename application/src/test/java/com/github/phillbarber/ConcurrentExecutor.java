@@ -12,14 +12,16 @@ import java.util.stream.IntStream;
 public class ConcurrentExecutor {
 
     private List<Callable<Response>> tasks = new ArrayList<>();
+    private int numberOfCalls;
 
     public ConcurrentExecutor(Callable<Response> task, int numberOfCalls) {
         IntStream.range(0, numberOfCalls).forEach(i -> tasks.add(task));
+        this.numberOfCalls = numberOfCalls;
     }
 
     public List<Response> executeRequestsInParallel() throws InterruptedException {
 
-        ExecutorService executorService = Executors.newFixedThreadPool(tasks.size());
+        ExecutorService executorService = Executors.newFixedThreadPool(numberOfCalls);
         List<Response> responses = executorService.invokeAll(tasks).parallelStream().map(responseFuture -> {
             try {
                 return responseFuture.get();

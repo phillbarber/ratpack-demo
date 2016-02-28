@@ -14,12 +14,12 @@ import javax.ws.rs.core.Response;
 import java.net.URISyntaxException;
 import java.util.List;
 
-public class CassandraBlockingSubscribeTest extends FunctionalTest {
+public class BlockingOnSubscribeDAOFunctionalTest extends FunctionalTest {
 
     private static final int NUMBER_OF_CALLS = 4;
     private DownstreamDBWithDummyValue downstreamDBWithDummyValue = new DownstreamDBWithDummyValue();
 
-    private Logger logger = LoggerFactory.getLogger(CassandraBlockingSubscribeTest.class);
+    private Logger logger = LoggerFactory.getLogger(BlockingOnSubscribeDAOFunctionalTest.class);
 
     @Before
     public void startDB() {
@@ -33,14 +33,14 @@ public class CassandraBlockingSubscribeTest extends FunctionalTest {
 
     @Test
     public void returnsContent() throws URISyntaxException {
-        Response response = getResponseFromHandler("cassandra-blocking-subscribe");
+        Response response = getResponseFromHandler("dao-blocking-subscribe");
         verifyDbHttpResponse(response);
     }
 
     @Test(timeout=DownstreamDBWithDummyValue.CASSANDRA_DELAY_IN_MILLIS * NUMBER_OF_CALLS)
     @Ignore("Because it is blocking!")
     public void handlerIsNotBlocking() throws InterruptedException {
-        List<Response> responses = new ConcurrentExecutor(() -> getResponseFromHandler("cassandra-blocking-subscribe"), NUMBER_OF_CALLS).executeRequestsInParallel();
+        List<Response> responses = new ConcurrentExecutor(() -> getResponseFromHandler("dao-blocking-subscribe"), NUMBER_OF_CALLS).executeRequestsInParallel();
         verifyAllDbHttpResponses(responses, NUMBER_OF_CALLS);
     }
 

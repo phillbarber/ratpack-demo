@@ -39,15 +39,15 @@ public class MyApp {
 
                     chain
                         .path("happy", new HappyHandler(downstreamHttpService))
-                        .path("happy-deterministic", new HappyDeterministicHandler(downstreamHttpService))
-                        .path("blocking", new BlockingHandler(downstreamHttpService))
-                        .path("cassandra-blocking-obviously", new DAOHandler(new BlockingObviouslyDAO(session)))
-                        .path("cassandra-blocking-subscribe", new DAOHandler(new BlockingOnSubscribeDAO(session)))
-                        .path("cassandra-nonblocking-cold", new DAOHandler(new NonBlockingColdDAO(session)))
-                        .path("cassandra-nonblocking-hot", new DAOHandler(new NonBlockingHotDAO(session)))
 
+                        .path("dao-blocking-obviously", new DAOHandler(new BlockingObviouslyDAO(session)))
+                        .path("dao-blocking-subscribe", new DAOHandler(new BlockingOnSubscribeDAO(session)))
+                        .path("dao-nonblocking-cold", new DAOHandler(new NonBlockingColdDAO(session)))
+                        .path("dao-nonblocking-hot", new DAOHandler(new NonBlockingHotDAO(session)))
 
                         .path("double-observable-promise", new DoubleObservableHandlerWithPromise(new DoubleObservableService()))
+                        .path("happy-deterministic", new HappyDeterministicHandler(downstreamHttpService))
+                        .path("blocking", new BlockingHandler(downstreamHttpService))
                         .path("observable-different-thread-broken", new ObservableOnDifferentThreadHandlerBroken(new ObservableOnDifferentThreadService()))
                         .path("observable-different-thread-fixed", new ObservableOnDifferentThreadHandlerFixed(new ObservableOnDifferentThreadService()))
                         .path("double-observable", new DoubleObservableHandler(new DoubleObservableService()));

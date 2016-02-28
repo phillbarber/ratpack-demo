@@ -4,5 +4,5 @@ import rx.Observable;
 
 public interface DAO {
 
-    public Observable<String> getValueFromDB();
+    Observable<String> getValueFromDB();
 }
