@@ -15,8 +15,6 @@ public class BlockingObviouslyDAO implements DAO {
         this.session = session;
     }
 
-    //what's the problem anyone?
-    //what's the impact?
     public Observable<String> getValueFromDB() {
         try {
             String result = getValue();
