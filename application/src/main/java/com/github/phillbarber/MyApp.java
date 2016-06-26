@@ -4,6 +4,7 @@ import com.datastax.driver.core.Session;
 import com.github.phillbarber.external.DownstreamDBWithDummyValue;
 import com.github.phillbarber.scenario.blocking.BlockingHandler;
 import com.github.phillbarber.scenario.cassandra.DAOHandler;
+import com.github.phillbarber.scenario.cassandra.RatpackCassandraHandler;
 import com.github.phillbarber.scenario.doubleobservable.DoubleObservableHandler;
 import com.github.phillbarber.scenario.doubleobservable.DoubleObservableHandlerWithPromise;
 import com.github.phillbarber.scenario.happy.HappyDeterministicHandler;
@@ -11,10 +12,7 @@ import com.github.phillbarber.scenario.happy.HappyHandler;
 import com.github.phillbarber.scenario.observablethread.ObservableOnDifferentThreadHandlerBroken;
 import com.github.phillbarber.scenario.observablethread.ObservableOnDifferentThreadHandlerFixed;
 import com.github.phillbarber.service.DownstreamHttpService;
-import com.github.phillbarber.service.dao.BlockingObviouslyDAO;
-import com.github.phillbarber.service.dao.BlockingOnSubscribeDAO;
-import com.github.phillbarber.service.dao.NonBlockingColdDAO;
-import com.github.phillbarber.service.dao.NonBlockingHotDAO;
+import com.github.phillbarber.service.dao.*;
 import io.netty.buffer.PooledByteBufAllocator;
 import ratpack.http.client.internal.DefaultHttpClient;
 import ratpack.server.RatpackServer;
@@ -38,7 +36,8 @@ public class MyApp {
                 .handlers(chain -> {
 
                     chain
-                        .path("happy", new HappyHandler(downstreamHttpService))
+                        .path("dao-ratpack-cassandra", new RatpackCassandraHandler(new RatpackCassandraDAO(session)))
+                            .path("happy", new HappyHandler(downstreamHttpService))
 
                         .path("happy-deterministic", new HappyDeterministicHandler(downstreamHttpService))
 
