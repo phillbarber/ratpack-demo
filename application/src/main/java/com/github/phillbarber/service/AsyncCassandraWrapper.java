@@ -12,10 +12,6 @@ import rx.internal.producers.SingleDelayedProducer;
 
 import java.util.concurrent.Executor;
 
-/**
- * Created by pergola on 25/02/16.
- */
-
 public class AsyncCassandraWrapper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AsyncCassandraWrapper.class);
@@ -24,7 +20,6 @@ public class AsyncCassandraWrapper {
     public static Observable<ResultSet> executeAsyncOnSubscribe(Statement statement, Scheduler scheduler, Session session) {
         return Observable.create(subscriber -> {
             try {
-                LOGGER.info("YAY");
                 ResultSetFuture resultSetFuture = session.executeAsync(statement);
 
                 SingleDelayedProducer<ResultSet> producer = new SingleDelayedProducer<>(subscriber);
@@ -33,11 +28,9 @@ public class AsyncCassandraWrapper {
                 resultSetFuture.addListener(() -> {
                     try {
 
-                        LOGGER.info("YAY2");
                         ResultSet result = resultSetFuture.get();
                         producer.setValue(result);
                     } catch (Exception e) {
-                        LOGGER.info("YAY3");
                         LOGGER.warn("Error writing to Cassandra", e);
                         subscriber.onError(e);
                     }

@@ -17,8 +17,7 @@ public class NonBlockingColdDAO implements DAO {
 
     public Observable<String> getValueFromDB() {
         SimpleStatement statement = new SimpleStatement("select dummy from dummy");
-        Observable<ResultSet> resultSetObservable1 = AsyncCassandraWrapper.executeAsyncOnSubscribe(statement, RxRatpack.scheduler(), session);
-
-        return resultSetObservable1.map(resultSet -> resultSet.one().getString("dummy"));
+        Observable<ResultSet> resultSetObservable = AsyncCassandraWrapper.executeAsyncOnSubscribe(statement, RxRatpack.scheduler(), session);
+        return resultSetObservable.map(resultSet -> resultSet.one().getString("dummy"));
     }
 }
