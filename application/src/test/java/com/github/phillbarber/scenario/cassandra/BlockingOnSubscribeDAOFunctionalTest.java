@@ -37,7 +37,7 @@ public class BlockingOnSubscribeDAOFunctionalTest extends FunctionalTest {
         verifyDbHttpResponse(response);
     }
 
-    @Test(timeout=DownstreamDBWithDummyValue.CASSANDRA_DELAY_IN_MILLIS * NUMBER_OF_CALLS)
+    @Test(timeout=DownstreamDBWithDummyValue.DEFAULT_CASSANDRA_DELAY_IN_MILLIS * NUMBER_OF_CALLS)
     @Ignore("Because it is blocking!")
     public void handlerIsNotBlocking() throws InterruptedException {
         List<Response> responses = new ConcurrentExecutor(() -> getResponseFromHandler("dao-blocking-subscribe"), NUMBER_OF_CALLS).executeRequestsInParallel();

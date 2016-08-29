@@ -36,7 +36,7 @@ public class NonBlockingColdDAOFunctionalTest extends FunctionalTest {
         verifyDbHttpResponse(response);
     }
 
-    @Test(timeout=DownstreamDBWithDummyValue.CASSANDRA_DELAY_IN_MILLIS * NUMBER_OF_CALLS)
+    @Test(timeout=DownstreamDBWithDummyValue.DEFAULT_CASSANDRA_DELAY_IN_MILLIS * NUMBER_OF_CALLS)
     public void handlerIsNotBlocking() throws InterruptedException {
         List<Response> responses = new ConcurrentExecutor(() -> getResponseFromHandler("dao-nonblocking-cold"), NUMBER_OF_CALLS).executeRequestsInParallel();
         verifyAllDbHttpResponses(responses, NUMBER_OF_CALLS);

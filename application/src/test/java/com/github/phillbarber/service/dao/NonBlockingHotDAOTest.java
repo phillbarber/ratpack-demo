@@ -8,7 +8,8 @@ public class NonBlockingHotDAOTest extends DAOTest{
 
 
     @Test
-    public void shouldReturnRowFromDB(){
-        assertThat(new NonBlockingHotDAO(getSession()).getValueFromDB().toBlocking().first()).isEqualTo("Amazing Value");
+    public void shouldReturnRowFromDB() throws Exception {
+        final NonBlockingHotDAO nonBlockingColdDAO = new NonBlockingHotDAO(getSession());
+        assertThat(callServiceInRatpackThread(() -> nonBlockingColdDAO.getValueFromDB())).isEqualTo("Amazing Value");
     }
 }

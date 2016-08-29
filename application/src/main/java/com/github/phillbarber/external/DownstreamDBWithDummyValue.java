@@ -14,15 +14,17 @@ import static org.scassandra.http.client.PrimingRequest.then;
 
 public class DownstreamDBWithDummyValue {
 
-    public static final long CASSANDRA_DELAY_IN_MILLIS = 1000l;
+    public static final long DEFAULT_CASSANDRA_DELAY_IN_MILLIS = 1000l;
     private PrimingClient primingClient;
     private Scassandra scassandra;
+    private long delayInMillis = DEFAULT_CASSANDRA_DELAY_IN_MILLIS;
 
     public DownstreamDBWithDummyValue(){
 
     }
 
     public void start() {
+        this.delayInMillis = DEFAULT_CASSANDRA_DELAY_IN_MILLIS;
         scassandra = ScassandraFactory.createServer();
         scassandra.start();
         primingClient = scassandra.primingClient();
@@ -35,17 +37,13 @@ public class DownstreamDBWithDummyValue {
                 .withQuery("select dummy from dummy")
                 .withThen(then()
                         .withRows(row)
-                        .withFixedDelay(CASSANDRA_DELAY_IN_MILLIS)
+                        .withFixedDelay(delayInMillis)
                 .build()));
     }
 
 
     public void stop(){
         scassandra.stop();
-    }
-
-    public PrimingClient getPrimingClient() {
-        return primingClient;
     }
 
     public static void main(String[] args) {
