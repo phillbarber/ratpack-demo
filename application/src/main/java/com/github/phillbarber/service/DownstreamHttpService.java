@@ -32,10 +32,15 @@ public class DownstreamHttpService {
         Promise<ReceivedResponse> receivedResponsePromise = httpClient.get(uri);
 
         Observable<ReceivedResponse> observe = RxRatpack.observe(receivedResponsePromise);
-        return observe.map(receivedResponse -> {
+        Observable<String> result = observe.map(receivedResponse -> {
             logger.info("Got response from downstream.");
             return receivedResponse.getBody().getText();
         });
+
+
+        //make this code blocking
+        //Observable<String> blocking = Observable.just(result.toBlocking().first());
+        return result;
     }
 
 }
