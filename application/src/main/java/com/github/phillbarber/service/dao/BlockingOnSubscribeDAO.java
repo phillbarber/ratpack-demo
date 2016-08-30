@@ -14,10 +14,10 @@ public class BlockingOnSubscribeDAO implements DAO{
         this.session = session;
     }
 
+    //This method results in blocking code... See OnSubscribeToObservableFuture:74
     public Observable<String> getValueFromDB() {
         ResultSetFuture resultSetFuture = session.executeAsync(new SimpleStatement("select dummy from dummy"));
         Observable<ResultSet> resultSetObservable = Observable.from(resultSetFuture);
-        //See OnSubscribeToObservableFuture:74
         return resultSetObservable.map(resultSet -> resultSet.one().getString("dummy"));
     }
 }
