@@ -25,6 +25,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FunctionalTest {
 
+    public static final int SLOW_ENDPOINT_DELAY = 3000;
+    public static final int FAST_ENDPOINT_DELAY = 100;
     private Logger logger = LoggerFactory.getLogger(FunctionalTest.class);
 
 
@@ -37,8 +39,7 @@ public class FunctionalTest {
 
     @Before
     public void setup(){
-        wireMockRule.stubFor(get(urlEqualTo("/fast-endpoint")).willReturn(aResponse().withStatus(200).withBody("YAY").withFixedDelay(100)));
-        wireMockRule.stubFor(get(urlEqualTo("/slow-endpoint")).willReturn(aResponse().withStatus(200).withBody("YAY").withFixedDelay(3000)));
+        wireMockRule.stubFor(get(urlEqualTo("/slow-endpoint")).willReturn(aResponse().withStatus(200).withBody("YAY").withFixedDelay(SLOW_ENDPOINT_DELAY)));
         //call this method first to ensure the application is started! If you don't do this, you can end up staring app multiple times!
         getAddress();
     }

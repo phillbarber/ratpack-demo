@@ -13,7 +13,6 @@ public class DownstreamHTTPServer {
 
     public void start() {
         wireMockServer.start();
-        wireMockServer.stubFor(get(urlEqualTo("/fast-endpoint")).willReturn(aResponse().withStatus(200).withBody("YAY").withFixedDelay(100)));
         wireMockServer.stubFor(get(urlEqualTo("/slow-endpoint")).willReturn(aResponse().withStatus(200).withBody("YAY").withFixedDelay(3000)));
     }
 
