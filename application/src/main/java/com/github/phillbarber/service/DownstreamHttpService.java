@@ -10,6 +10,8 @@ import rx.Observable;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class DownstreamHttpService {
 
@@ -42,5 +44,30 @@ public class DownstreamHttpService {
         //Observable<String> blocking = Observable.just(result.toBlocking().first());
         return result;
     }
+
+    public Observable<Integer> giveMeA200IfOnTimeOrA202IfLate(){
+        Promise<ReceivedResponse> receivedResponsePromise = httpClient.get(uri);
+
+        Observable<ReceivedResponse> observe = RxRatpack.observe(receivedResponsePromise);
+
+        Observable<Integer> result = observe.timeout(500, TimeUnit.MILLISECONDS).map(receivedResponse -> {
+            logger.info("Responded within timeout so returning 200.");
+            return 200;
+        }).onErrorReturn(thing -> {
+            if (thing instanceof TimeoutException){
+                logger.error("TIMEOT");
+                return 202;
+            }
+            else{
+                return 500;
+            }
+        });
+
+
+        //make this code blocking
+        //Observable<String> blocking = Observable.just(result.toBlocking().first());
+        return result;
+    }
+
 
 }
