@@ -40,8 +40,6 @@ public class DownstreamHttpService {
         });
 
 
-        //make this code blocking
-        //Observable<String> blocking = Observable.just(result.toBlocking().first());
         return result;
     }
 
@@ -64,8 +62,6 @@ public class DownstreamHttpService {
         });
 
 
-        //make this code blocking
-        //Observable<String> blocking = Observable.just(result.toBlocking().first());
         return result;
     }
 
